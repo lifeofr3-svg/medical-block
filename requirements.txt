@@ -1,0 +1,27 @@
+# Web Framework
+Flask==3.0.2
+Werkzeug==3.0.1
+gunicorn==21.2.0
+
+# Authentication & Security
+bcrypt==4.1.2
+cryptography==42.0.5
+python-dotenv==1.0.1
+
+# Data Processing
+pandas==2.2.3
+numpy==1.26.4
+
+# Machine Learning
+torch==2.2.1
+torchvision==0.17.1
+xgboost==3.1.2
+scikit-learn==1.6.1
+Pillow==9.5.0
+
+# Blockchain
+web3==6.15.1
+py-solc-x==2.0.2
+
+# Utilities
+python-multipart==0.0.18

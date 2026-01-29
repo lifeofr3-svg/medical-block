@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Disease Prediction System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <h2>Medical Prediction System</h2>
+            <div class="user-info">
+                <span>Welcome, {{ user_name }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Blockchain-Integrated Medical Disease Prediction</h1>
+        <p class="subtitle">AI-Powered Multimodal Chronic Disease Detection with Smart Contract Governance</p>
+        
+        <div class="card-container">
+            <div class="card">
+                <h2>Diabetes Detection</h2>
+                <p>Upload patient vitals and retinal scan images for comprehensive diabetes screening using XGBoost and EfficientNet models.</p>
+                <a href="{{ url_for('diabetes') }}" class="btn">Start Diagnosis</a>
+            </div>
+            
+            <div class="card">
+                <h2>Heart Disease Detection</h2>
+                <p>Analyze patient clinical data and ECG images to detect cardiovascular conditions using XGBoost and ResNet50 models.</p>
+                <a href="{{ url_for('heart') }}" class="btn">Start Diagnosis</a>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+            <h3 style="color: #333; margin-bottom: 15px;">System Features</h3>
+            <ul style="color: #666; line-height: 2;">
+                <li>Multimodal AI: Combines tabular data and medical images</li>
+                <li>Federated Learning: Privacy-preserving distributed training</li>
+                <li>Blockchain: Immutable audit trail via Ethereum smart contracts</li>
+                <li>IPFS Storage: Decentralized medical image storage</li>
+                <li>Real-time Predictions: Instant disease classification with confidence scores</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

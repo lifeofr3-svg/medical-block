@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <h2>Medical Prediction System</h2>
+            <div class="user-info">
+                <span>Welcome, {{ user_name }}</span>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <a href="{{ url_for('index') }}" class="back-btn">← Back to Home</a>
+        
+        <h1>Heart Disease Detection System</h1>
+        <p class="subtitle">Enter patient clinical data and upload ECG image</p>
+        
+        <div class="form-container">
+            <form id="heartForm" enctype="multipart/form-data" onsubmit="event.preventDefault(); submitHeartForm();">
+                <div class="form-group">
+                    <label for="patient_id">Patient ID</label>
+                    <input type="text" id="patient_id" name="patient_id" value="PATIENT_001" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">Age (29-77)</label>
+                        <input type="number" id="age" name="age" min="29" max="77" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" name="sex" required>
+                            <option value="">Select</option>
+                            <option value="0">Female</option>
+                            <option value="1">Male</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cp">Chest Pain Type</label>
+                        <select id="cp" name="cp" required>
+                            <option value="">Select</option>
+                            <option value="0">Typical Angina</option>
+                            <option value="1">Atypical Angina</option>
+                            <option value="2">Non-anginal Pain</option>
+                            <option value="3">Asymptomatic</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="trestbps">Resting Blood Pressure (94-200)</label>
+                        <input type="number" id="trestbps" name="trestbps" min="94" max="200" step="1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="chol">Cholesterol (126-564)</label>
+                        <input type="number" id="chol" name="chol" min="126" max="564" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+                        <select id="fbs" name="fbs" required>
+                            <option value="">Select</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="restecg">Resting ECG Results</label>
+                        <select id="restecg" name="restecg" required>
+                            <option value="">Select</option>
+                            <option value="0">Normal</option>
+                            <option value="1">ST-T Wave Abnormality</option>
+                            <option value="2">Left Ventricular Hypertrophy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="thalach">Max Heart Rate Achieved (71-202)</label>
+                        <input type="number" id="thalach" name="thalach" min="71" max="202" step="1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exang">Exercise Induced Angina</label>
+                        <select id="exang" name="exang" required>
+                            <option value="">Select</option>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="oldpeak">ST Depression (0-6.2)</label>
+                        <input type="number" id="oldpeak" name="oldpeak" min="0" max="6.2" step="0.1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="slope">Slope of Peak Exercise ST Segment</label>
+                        <select id="slope" name="slope" required>
+                            <option value="">Select</option>
+                            <option value="0">Upsloping</option>
+                            <option value="1">Flat</option>
+                            <option value="2">Downsloping</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ca">Number of Major Vessels (0-4)</label>
+                        <select id="ca" name="ca" required>
+                            <option value="">Select</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="thal">Thalassemia</label>
+                    <select id="thal" name="thal" required>
+                        <option value="">Select</option>
+                        <option value="0">Normal</option>
+                        <option value="1">Fixed Defect</option>
+                        <option value="2">Reversible Defect</option>
+                        <option value="3">Irreversible Defect</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image_file">ECG Image</label>
+                    <input type="file" id="image_file" name="image_file" accept="image/*" required>
+                    <p style="color: #666; font-size: 0.9em; margin-top: 5px;">
+                        Upload ECG/electrocardiogram image (PNG, JPG)
+                    </p>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitBtn">Analyze & Predict</button>
+            </form>
+            
+            <div class="loading" id="loading">
+                <p>Processing medical data and recording on blockchain...</p>
+            </div>
+            
+            <div class="result-container" id="resultContainer"></div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: blockchain-medical-app
+    runtime: python
+    plan: free  # Change to 'starter' or higher for production
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production
+      - key: GANACHE_URL
+        value: http://127.0.0.1:7545  # Update this with your blockchain node URL
+      - key: ACCOUNT_ADDRESS
+        value: 0x22859a802657c4012d90Ba3259a707aD4559f6A9  # Update with your address
+      - key: PRIVATE_KEY
+        sync: false  # Set this in Render dashboard for security
