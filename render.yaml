@@ -2,19 +2,21 @@ services:
   - type: web
     name: blockchain-medical-app
     runtime: python
-    plan: free  # Change to 'starter' or higher for production
+    plan: free  # Upgrade to 'starter' ($7/mo) for 512MB+ RAM if needed
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 2
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 180 --workers 1 --max-requests 100 --max-requests-jitter 20
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
       - key: SECRET_KEY
         generateValue: true
       - key: FLASK_ENV
         value: production
-      - key: GANACHE_URL
-        value: http://127.0.0.1:7545  # Update this with your blockchain node URL
+      # Alchemy Configuration
+      - key: ALCHEMY_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: BLOCKCHAIN_NETWORK
+        value: sepolia  # Use 'mainnet' for production
+      # Your Wallet Credentials (Set in Render dashboard)
       - key: ACCOUNT_ADDRESS
-        value: 0x22859a802657c4012d90Ba3259a707aD4559f6A9  # Update with your address
+        sync: false  # Set your wallet address in Render dashboard
       - key: PRIVATE_KEY
-        sync: false  # Set this in Render dashboard for security
+        sync: false  # Set your private key in Render dashboard (KEEP SECRET!)

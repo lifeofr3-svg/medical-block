@@ -4,7 +4,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Blockchain Configuration
-GANACHE_URL = os.getenv("GANACHE_URL", "http://127.0.0.1:7545")
+# Support for both Alchemy and Ganache
+ALCHEMY_API_KEY = os.getenv("ALCHEMY_API_KEY", "")
+BLOCKCHAIN_NETWORK = os.getenv("BLOCKCHAIN_NETWORK", "sepolia")  # sepolia, mainnet, or localhost
+
+# Build Alchemy URL if API key is provided, otherwise use GANACHE_URL
+if ALCHEMY_API_KEY:
+    if BLOCKCHAIN_NETWORK == "mainnet":
+        GANACHE_URL = f"https://eth-mainnet.g.alchemy.com/v2/{ALCHEMY_API_KEY}"
+    elif BLOCKCHAIN_NETWORK == "sepolia":
+        GANACHE_URL = f"https://eth-sepolia.g.alchemy.com/v2/{ALCHEMY_API_KEY}"
+    else:
+        GANACHE_URL = os.getenv("GANACHE_URL", "http://127.0.0.1:7545")
+else:
+    GANACHE_URL = os.getenv("GANACHE_URL", "http://127.0.0.1:7545")
+
 ACCOUNT_ADDRESS = os.getenv("ACCOUNT_ADDRESS", "0x22859a802657c4012d90Ba3259a707aD4559f6A9")
 PRIVATE_KEY = os.getenv("PRIVATE_KEY", "0xbb92e4d51d7947e632be0fb260f4dd9aba3e7b63a50e466259ff800889d49305")
 
